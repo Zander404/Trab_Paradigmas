@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head class="">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <title>Pokedex</title>
+    <!-- Imports de Imagens/Icons -->
+    <link rel="icon" href="./images/favicon-16x16.png">
+
+    <!-- Import de Fonts  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;800&family=Roboto:wght@100&display=swap" rel="stylesheet">
+
+    <!-- imports de bibliotecas e arquivos JS/CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+     
+    <script defer src="./script.js"></script> 
+    <!-- Usa "defer" para carregar o script depois do html -->
+</head>
+<body class="mx-0 flex justify-center bg-gradient-to-r from-cyan-500 to-blue-500 font-['Oxanium'] font-bold text-xl ">
+    
+
+    <main class="w-max-[425px] relative text-center">
+        
+        <h1 class="pokemon_data absolute  top-[55%] right-[27%] sm:text-[2vw]   capitalize">
+            <span class="pokemon_number  text-gray-400 "></span> -
+            <span class="pokemon_name"></span>
+        </h1>
+
+        <form class="form absolute w-[65%] top-[65%] left-[13%]">
+            <input 
+                type="search"
+                class="input_search p-[4%] w-[100%] border border-black rounded-[5px] shadow-black font-semibold "
+                placeholder="Número ou Nome"
+                required
+                />
+        </form>
+
+        <div class="botao absolute flex gap-5 bottom-[10%] left-[50%] w-[65%] translate-x-[-57%]">
+            <button class="button btn-prev w-[50%] border rounded-sm bg-[#444]  ">&ltPrev </button>
+            <button class="button btn-next w-[50%] border rounded-sm bg-[#444]  ">Next &gt</button>
+        </div>
+
+        <img src="./images/pokedex.png" alt="pokedex">
+        <img src="" alt="pokemon-img" class="pokemon_image absolute bottom-[50%] left-[50%] translate-x-[-63%] h-[20%]">
+        
+    </main>
+    
+</body>
+</html>

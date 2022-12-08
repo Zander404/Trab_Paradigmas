@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head class="">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      
+      <title>Pokedex</title>
+      <!-- Imports de Imagens/Icons -->
+      <link rel="icon" href="./images/favicon-16x16.png">
+
+      <!-- Import de Fonts  -->
+      <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;800&family=Roboto:wght@100&display=swap" rel="stylesheet">
+
+      <!-- imports de bibliotecas e arquivos JS/CSS -->
+      <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+      
+      <!-- Usa "defer" para carregar o script depois do html -->
+      <script defer src="./apicall.js"></script> 
+      
+  </head>
+
+  <body class="bg-gray-600 font-['Oxanium'] font-bold text-md">
+    
+    <div class="flex justify-evenly container mx-8 ">
+
+
+      <!-- tabela para listar os pokemon e os eventos ao clickar neles -->
+      <table id="tabela" class=" bg-red-500 border-separate border-spacing-2 border border-slate-500 px-8 rounded-xl table-auto">
+        <thead id="head_table" class="border border-black">
+          <tr class="border border-slate-500">
+            <th>Nº do Pokémon</th>
+            <th>Nome</th>
+            <th>Info</th>
+          </tr>
+        </thead>
+        <tbody id="body_table">
+          <!-- Dados da Tabela -->
+          
+            
+        </tbody>
+
+        <tfoot>
+
+          <td><button class="btn btn-prev bg-slate-500 border border-radius rounded-md"> &lt&lt PREV</button></td>
+          <th></th>
+          <td><button class="btn btn-next bg-slate-500 border border-radius rounded-md " >  NEXT &gt&gt</button></td>  
+          
+        </tfoot>
+       
+      </table>
+
+
+
+      <!-- tabela para listar o checkout do pokemon no estoque -->
+      <table id="info_table" class="bg-red-500 border-separate border-spacing-2 border border-slate-500 px-8">
+        <thead id="info_head_table" >
+          <tr>
+            <th class="">Pokemon</th>
+            <th class="">Especial</th>
+            <!-- <th class="bg-black text-white border border-white border-radius rounded-xl "></th> -->
+          </tr>
+        </thead>
+        <tbody id="info_body_table">
+          <!-- <tr">
+            <td class="border border-slate-700">The Sliding Mr. Bones (Next Stop, Pottersville)</td>
+            <td class="border border-slate-700">Malcolm Lockyer</td>
+            <td class="border border-slate-700">1961</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-700">Witchy Woman</td>
+            <td class="border border-slate-700">The Eagles</td>
+            <td class="border border-slate-700">1972</td>
+          </tr>
+          <tr>
+            <td class="border border-slate-700">Shining Star</td>
+            <td class="border border-slate-700">Earth, Wind, and Fire</td>
+            <td class="border border-slate-700">1975</td>
+          </tr> -->
+          
+        </tbody>
+ 
+      </table>
+      
+    </div>
+    
+
+
+  </body>
+</html>
