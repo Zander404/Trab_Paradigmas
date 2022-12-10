@@ -62,11 +62,12 @@ const renderList = async (lista) =>{
 
 
         data.results.forEach((element) => {
+          
             const pokemon = `
             <tr>
             <th class="bg-black text-white border border-white border-radius rounded-md ">${ps}</th>
             <th class="bg-black text-white border border-white border-radius rounded-md ">${element.name}</th>
-            <th><button data-info=${data.id} type="submit" class="btn btn-info  bg-white border-radius rounded-md border border-black">"Saber mais"</button></th>
+            <th><button data-info=${ps} type="submit" class="btn btn-info  bg-white border-radius rounded-md border border-black">"Saber mais"</button></th>
             
             </tr>
             `
@@ -78,7 +79,9 @@ const renderList = async (lista) =>{
             for(let j=0; j<saibaMais.length;j++){
                 saibaMais[j].addEventListener("click", ()=>{
                     infoP = data.results[j].url
-                    indt[j] = data-info
+                    indt[j] = saibaMais[j].dataset.info
+                    indt[j] = parseInt(indt[j])
+                    
                      
                     estoque=estoque-1;
                     // console.log(estoque)
@@ -97,9 +100,9 @@ const renderList = async (lista) =>{
 
 
                             if (flag != 1){
-                                pokemonlist.push({id: data['id'], quant: 10})
                                 console.log(pokemonlist)
                                 pokemonName = data['name']
+                                pokemonlist.push({id: data['id'], nome: pokemonName , quant: 10})
                                 
                                 pokemonImage =  data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
 
@@ -113,12 +116,17 @@ const renderList = async (lista) =>{
                             }else{
                                 quantPokemon = 1
                                 console.log('teste')
-                                pokemonlist.forEach((element) => {
-                                    if (element.id == data['id']){
-                                        let car = element.id 
-                                    }
-                                    console.log(car)    
-                                })
+                                let car
+
+                                for (let k = 0;k<pokemonlist.length; k++){
+                                        if (pokemonlist[k].id == indt[j-1]){
+                                            car = pokemonlist[k].id
+                                            pokemonlist[car]['quant'] = pokemonlist[car]['quant']-1 
+                                            console.log(pokemonlist)
+                                            k=999
+                                        }
+
+                                }
                                 flag = 0 
                             }
                         }
