@@ -11,11 +11,11 @@ let pokemonName = ''
 let pokemonlist = []
 
 
-
 //Paginação
 let next_page
 let prev_page
 let list = 'https://pokeapi.co/api/v2/pokemon'
+ 
 
 
 // Tabela 1
@@ -26,14 +26,13 @@ const tHead = document.getElementById('header_table');
 //Tabela 2
 const tdBodyTableInfo = document.getElementById('info_body_table');
 const tHeadInfo = document.getElementById('info_header_table');
-
-
+const tdTime = document.getElementById('time')
 
 //Botões 
 const saibaMais = document.getElementsByClassName("btn-info")
 const prev = document.querySelector(".btn-prev")
 const next = document.querySelector(".btn-next")
-
+const finalizar = document.querySelector(".btn-finalizar")
 
 
 const fetchApi = async(list) => {
@@ -50,6 +49,7 @@ const fetchApi = async(list) => {
 const renderList = async (lista) =>{
     const data = await fetchApi(lista)
     if(data.results){
+       
         // console.log(data)
         next_page = data.next
         prev_page = data.previous
@@ -59,6 +59,7 @@ const renderList = async (lista) =>{
 
         let ps = id
         let indt = []
+        let quant = []
 
 
         data.results.forEach((element) => {
@@ -67,7 +68,7 @@ const renderList = async (lista) =>{
             <tr>
             <th class="bg-black text-white border border-white border-radius rounded-md ">${ps}</th>
             <th class="bg-black text-white border border-white border-radius rounded-md ">${element.name}</th>
-            <th><button data-info=${ps} type="submit" class="btn btn-info  bg-white border-radius rounded-md border border-black">"Saber mais"</button></th>
+            <th><button data-info=${ps} type="submit" class="btn btn-info  bg-white border-radius rounded-md border border-black">"Adicionar"</button></th>
             
             </tr>
             `
@@ -82,12 +83,7 @@ const renderList = async (lista) =>{
                     indt[j] = saibaMais[j].dataset.info
                     indt[j] = parseInt(indt[j])
                     
-                     
-                    estoque=estoque-1;
-                    // console.log(estoque)
                     info = fetchApi(infoP).then(data =>{
-                        // console.log(data)
-                        
                         let flag = 0
 
                         if (data){
@@ -97,38 +93,51 @@ const renderList = async (lista) =>{
                                 }
 
                             }
+                            size = pokemonlist.length
+                            if (size < 6){
+                                if (flag != 1){
+                                    console.log(pokemonlist)
+                                    console.log(data)
+                                    
+                                    pokemonName = data['name']
+                                    pokemonlist.push({id: data['id'], nome: pokemonName, type: data['types'], weight: data['weight'], height: data['height']})
+                                    
+                                    pokemonImage =  data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
 
-
-                            if (flag != 1){
-                                console.log(pokemonlist)
-                                pokemonName = data['name']
-                                pokemonlist.push({id: data['id'], nome: pokemonName , quant: 10})
+                                    const info = `
+                                        <tr>
+                                            <td class="bg-black text-white border border-white border-radius rounded-md ">${pokemonName}</td>
+                                            <td class="bg-black text-white border border-white border-radius rounded-md "><img src="${pokemonImage}" alt="pokemon-img" class="pokemon_image"></td>
+                                            
+                                        </tr>
+                                    `
+                                    tdBodyTableInfo.innerHTML += info
+                                    const time = `
+                                        <tr>
+                                            <td class="bg-black text-white border border-white border-radius rounded-md ">${pokemonlist.length}/6</td>
+                                        </tr>
+                                    `
+                                    tdTime.innerHTML=time
                                 
-                                pokemonImage =  data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
 
-                                const info = `
-                                    <tr>
-                                        <td class="bg-black text-white border border-white border-radius rounded-md ">${pokemonName}</td>
-                                        <td class="bg-black text-white border border-white border-radius rounded-md "><img src="${pokemonImage}" alt="pokemon-img" class="pokemon_image"></td>
-                                    </tr>
-                            `
-                            tdBodyTableInfo.innerHTML += info
-                            }else{
-                                quantPokemon = 1
-                                console.log('teste')
-                                let car
+                                }else{
+                                    
+                                    console.log('teste')
+                                    
 
-                                for (let k = 0;k<pokemonlist.length; k++){
-                                        if (pokemonlist[k].id == indt[j-1]){
-                                            car = pokemonlist[k].id
-                                            pokemonlist[car]['quant'] = pokemonlist[car]['quant']-1 
-                                            console.log(pokemonlist)
-                                            k=999
-                                        }
+                                    for (let k = 0;k<pokemonlist.length; k++){
+                                            if (pokemonlist[k].id == indt[j-1]){
+                                                console.log(pokemonlist)
+                                                break
+                                            }
+                                            
 
+                                    }
+                                    flag = 0 
                                 }
-                                flag = 0 
-                            }
+                            }else{
+                                alert("O time está cheio")
+                            }        
                         }
                     })
                 })
@@ -168,7 +177,11 @@ next.addEventListener("click", () => {
     }
 })
 
+finalizar.addEventListener("click", () => {
+    event.preventDefault()
+    alert("Time finalizado")
+})
 
 
-// Info dos Pokemons
+// 
 
