@@ -14,8 +14,7 @@ let pokemonlist = []
 //Paginação
 let next_page
 let prev_page
-let list = 'https://pokeapi.co/api/v2/pokemon'
- 
+let list = 'https://pokeapi.co/api/v2/pokemon?limit=10&offset=2.' 
 
 
 // Tabela 1
@@ -27,6 +26,7 @@ const tHead = document.getElementById('header_table');
 const tdBodyTableInfo = document.getElementById('info_body_table');
 const tHeadInfo = document.getElementById('info_header_table');
 const tdTime = document.getElementById('time')
+
 
 //Botões 
 const saibaMais = document.getElementsByClassName("btn-info")
@@ -44,13 +44,20 @@ const fetchApi = async(list) => {
     }
 }
 
+fetchApi(list)
+fetchApi(list)
+fetchApi(list)
+fetchApi(list)
+fetchApi(list)
+fetchApi(list)
+fetchApi(list)
+
 
 // Povoar tabela com os Pokémons disponivéis
 const renderList = async (lista) =>{
     const data = await fetchApi(lista)
     if(data.results){
        
-        // console.log(data)
         next_page = data.next
         prev_page = data.previous
     
@@ -59,8 +66,6 @@ const renderList = async (lista) =>{
 
         let ps = id
         let indt = []
-        let quant = []
-
 
         data.results.forEach((element) => {
           
@@ -68,7 +73,7 @@ const renderList = async (lista) =>{
             <tr>
             <th class="bg-black text-white border border-white border-radius rounded-md ">${ps}</th>
             <th class="bg-black text-white border border-white border-radius rounded-md ">${element.name}</th>
-            <th><button data-info=${ps} type="submit" class="btn btn-info  bg-white border-radius rounded-md border border-black">"Adicionar"</button></th>
+            <th><button onclick="add()" data-info=${ps} type="submit" class="btn btn-info  bg-white border-radius rounded-md border border-black">"Adicionar"</button></th>
             
             </tr>
             `
@@ -158,7 +163,7 @@ renderList(list)
 //Paginação 
 prev.addEventListener("click", () => {
     event.preventDefault()
-    if (prev_page != 'null'){
+    if (prev_page != null){
         renderList(prev_page)
         id -= 20;
     }else{
@@ -169,7 +174,7 @@ prev.addEventListener("click", () => {
 
 next.addEventListener("click", () => {
     event.preventDefault()
-    if (next_page != 'null'){
+    if (next_page != null){
         renderList(next_page)
         id += 20;
     }else{
@@ -177,10 +182,51 @@ next.addEventListener("click", () => {
     }
 })
 
-finalizar.addEventListener("click", () => {
+
+// finalizar.addEventListener("click", () => {
+//     event.preventDefault()
+//     alert("Time finalizado")
+// })
+const fin = () => {
     event.preventDefault()
     alert("Time finalizado")
-})
+}
+
+
+const add = () =>{
+
+}
+
+
+// Workers
+
+// const worker = new Worker('worker.js');
+// const worker2 = new Worker('worker.js');
+// const worker3 = new Worker('worker.js');
+// const worker4 = new Worker('worker.js');
+// const worker5 = new Worker('worker.js');
+const worker = []
+
+for (i=0;i<100;i++ ){
+    worker[i] = new Worker('worker.js');
+}
+const buffer = new SharedArrayBuffer(1024);
+const view = new Int32Array(buffer);
+view[0]=0;
+for(i = 0; i<8;i++){
+    worker[i].postMessage(buffer);
+}
+
+let x=200000000,z=0;
+while ( x > 0) {
+    view[1]= view[1]+x;
+    x--;
+}
+Atomics.store(view,0,1);
+Atomics.notify(view,0,1);
+
+
+
 
 
 // 

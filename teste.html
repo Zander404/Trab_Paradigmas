@@ -4,6 +4,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="style.css">
 
       
       <title>Pokedex</title>
@@ -14,7 +15,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;800&family=Roboto:wght@100&display=swap" rel="stylesheet">
 
       <!-- imports de bibliotecas e arquivos JS/CSS -->
-      <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+      <!-- <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script> -->
       
       <!-- Usa "defer" para carregar o script depois do html -->
       <script defer src="./apicall.js"></script> 
@@ -28,7 +29,8 @@
 
       <!-- tabela para listar os pokemon e os eventos ao clickar neles -->
       <table id="tabela" class=" bg-red-500 border-separate border-spacing-2 border border-slate-500 px-8 rounded-xl table-auto">
-        <thead id="head_table" class="border border-black">
+        <thead id="head_table"
+         class="border border-black">
           <tr class="border border-slate-500">
             <th>Nº do Pokémon</th>
             <th>Nome</th>
@@ -54,7 +56,7 @@
       
       <!-- tabela para listar o checkout do pokemon no estoque -->
       <table id="info_table" class=" flex flex-col content-center bg-red-500 border-separate border-spacing-2 border border-slate-500 px-8">
-        <thead class="justify-center" id="info_head_table" >
+        <thead class="justify-center" id="info_head_table">
           <tr class="justify-center">    
             <th class="">Pokemon</th>
            
@@ -66,7 +68,7 @@
         </tbody>
         <tfoot>
           <th>
-            <td><button class="btn btn-finalizar bg-slate-500 border border-radius rounded-md ">Finalizar Equipe</button></td>
+            <td><button onclick="fin()" class="btn btn-finalizar bg-slate-500 border border-radius rounded-md ">Finalizar Equipe</button></td>
             <td id="time"></td> 
           </th>
         </tfoot>
@@ -75,15 +77,6 @@
       
     </div>
     
-    <script>
-      let worker1 = new Worker('worker.js') 
-      let worker2 = new Worker('worker.js')
-      let worker3 = new Worker('worker.js')
-      let worker5 = new Worker('worker.js')
-      let worker6 = new Worker('worker.js')
-      
-      worker1.postMessage('')
-    </script>
 
   </body>
 </html>
