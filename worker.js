@@ -1,25 +1,51 @@
-const fetchApi = async(list) => {
-    const ApiResponse = await fetch(list)
-    if(ApiResponse.status == 200){
-        const data = await ApiResponse.json()
-        return data
+self.onmessage = (e) => {
+    const arrayView = new Int32Array(e.data.vetor);
+    const flagview = new Int32Array(e.data.flag);
 
+    // Plano para gerar concorrencia
+    // Cada Worker vai gerar 1 time de 6 pokemons
+    // Cada time vai ser armazenado em um vetor de 6 posições
+
+    //Sorteia um pokemon entre os 1032 disponiveis
+    let pokemon = Math.ceil(Math.random() * 1032);
+  
+
+     //Espera que o vertor esteja desponivel
+     Atomics.wait(flagview, 0, 0);
+     Atomics.store(flagview, 0, 0);
+     let i = 0;
+ 
+
+  while(true){
+  
+    //Verifica se na memoria compartilhada já existe o pokemon
+    for(let i=0; i<arrayView.length; i++){
+        if(arrayView[i] == pokemon){
+            //Se existir sorteia outro
+            pokemon = Math.ceil(Math.random() * 1032);
+            // console.log('sorteou')
+            i=0;
+        }
+        //Se não existir adiciona no vetor
+        if(arrayView[i] == 0){
+            Atomics.store(arrayView, i, pokemon);
+             console.log('adicionou')
+            
+        }
     }
-}
 
+    if(i == arrayView.length-1){      
+      break
+    }
+    
+  i++
+  } 
 
-self.onmessage= ({data:buffer}) =>
-{
-    const view = new Int32Array(buffer);
-    Atomics.wait(view,0,0);
-    Atomics.store(view,0,0);
-    
-    let id = Math.floor(Math.random() * 4)
-    id +=1 
-    let url = [{url: `https://pokeapi.co/api/v2/pokemon/${id}`, info: 'pokemon'},{url: `https://pokeapi.co/api/v2/berry/${id}`, info: 'berry'},{url: `https://pokeapi.co/api/v2/contest-type/${id}`, info: 'constest'},{url: `https://pokeapi.co/api/v2/move/${id}`, info: 'moves'},{url: `https://pokeapi.co/api/v2/generation/${id}`, info: 'generation'},{url: `https://pokeapi.co/api/v2/item/${id}`, info: 'items'},{url: `https://pokeapi.co/api/v2/location/${id}`, info: 'location'}, ]
-    
-    
-    buffer = fetchApi(url[id]['url']).then(data => {console.log(data);console.log(url[id]['info'])})
-    Atomics.store(view,0,1);
-}
+  //Libera o vetor
+  Atomics.store(flagview, 0, 1);
+  Atomics.notify(flagview, 0, 1); 
+            
+  
+  };
+
 

@@ -3,8 +3,6 @@
 // Constantes se objetivo ainda
 let id = 1; 
 
-let estoque = 100;
-
 //Pokemon info 
 let pokemonImage = ''
 let pokemonName = ''
@@ -14,9 +12,7 @@ let pokemonlist = []
 //Paginação
 let next_page
 let prev_page
-let list = 'https://pokeapi.co/api/v2/pokemon?limit=50&offset=10 .'
-
-
+let list = 'https://pokeapi.co/api/v2/pokemon?limit=20&offset=0.' 
 
 
 // Tabela 1
@@ -54,12 +50,14 @@ const renderList = async (lista) =>{
        
         next_page = data.next
         prev_page = data.previous
-        console.log(prev_page)
     
         
         tdBodyTable.innerHTML = ''
 
         let ps = id
+        let indt = []
+        let quant = []
+
 
         data.results.forEach((element) => {
           
@@ -75,72 +73,72 @@ const renderList = async (lista) =>{
             tdBodyTable.innerHTML += pokemon
 
 
-            // //Paginação das Infos do Pokémon
-            // for(let j=0; j<saibaMais.length;j++){
-            //     saibaMais[j].addEventListener("click", ()=>{
-            //         infoP = data.results[j].url
-            //         indt[j] = saibaMais[j].dataset.info
-            //         indt[j] = parseInt(indt[j])
+            //Paginação das Infos do Pokémon
+            for(let j=0; j<saibaMais.length;j++){
+                saibaMais[j].addEventListener("click", ()=>{
+                    infoP = data.results[j].url
+                    indt[j] = saibaMais[j].dataset.info
+                    indt[j] = parseInt(indt[j])
                     
-            //         info = fetchApi(infoP).then(data =>{
-            //             let flag = 0
+                    info = fetchApi(infoP).then(data =>{
+                        let flag = 0
 
-            //             if (data){
-            //                 for(i=0;i<pokemonlist.length;i++){
-            //                     if (pokemonlist[i].id == data['id']){
-            //                         flag = 1
-            //                     }
+                        if (data){
+                            for(i=0;i<pokemonlist.length;i++){
+                                if (pokemonlist[i].id == data['id']){
+                                    alert("Pokemon já foi adicionado a equipe, selecione outro")
+                                    flag = 1
+                                }
 
-            //                 }
-            //                 size = pokemonlist.length
-            //                 if (size < 6){
-            //                     if (flag != 1){
-            //                         console.log(pokemonlist)
-            //                         console.log(data)
+                            }
+                            size = pokemonlist.length
+                            if (size < 6){
+                                if (flag != 1){
+                                    console.log(pokemonlist)
+                                    console.log(data)
                                     
-            //                         pokemonName = data['name']
-            //                         pokemonlist.push({id: data['id'], nome: pokemonName, type: data['types'], weight: data['weight'], height: data['height']})
+                                    pokemonName = data['name']
+                                    pokemonlist.push({id: data['id'], nome: pokemonName, type: data['types'], weight: data['weight'], height: data['height']})
                                     
-            //                         pokemonImage =  data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
+                                    // pokemonImage =  data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
 
-            //                         const info = `
-            //                             <tr>
-            //                                 <td class="bg-black text-white border border-white border-radius rounded-md ">${pokemonName}</td>
-            //                                 <td class="bg-black text-white border border-white border-radius rounded-md "><img src="${pokemonImage}" alt="pokemon-img" class="pokemon_image"></td>
-                                            
-            //                             </tr>
-            //                         `
-            //                         tdBodyTableInfo.innerHTML += info
-            //                         const time = `
-            //                             <tr>
-            //                                 <td class="bg-black text-white border border-white border-radius rounded-md ">${pokemonlist.length}/6</td>
-            //                             </tr>
-            //                         `
-            //                         tdTime.innerHTML=time
+                                    const info = `
+                                        <tr>
+                                            <td class="bg-black text-white border border-white border-radius rounded-md ">${pokemonName}</td>
+                                        </tr>
+                                    `
+                                    tdBodyTableInfo.innerHTML += info
+                                    const time = `
+                                        <tr>
+                                            <td class="bg-black text-white border border-white border-radius rounded-md ">${pokemonlist.length}/6</td>
+                                        </tr>
+                                    `
+                                    tdTime.innerHTML=time
                                 
 
-            //                     }else{
+                                }else{
                                     
-            //                         console.log('teste')
+                                    console.log('teste')
                                     
 
-            //                         for (let k = 0;k<pokemonlist.length; k++){
-            //                                 if (pokemonlist[k].id == indt[j-1]){
-            //                                     console.log(pokemonlist)
-            //                                     break
-            //                                 }
+                                    for (let k = 0;k<pokemonlist.length; k++){
+                                            if (pokemonlist[k].id == indt[j-1]){
+                                                console.log(pokemonlist)
+                                                break
+                                            }
                                             
 
-            //                         }
-            //                         flag = 0 
-            //                     }
-            //                 }else{
-            //                     alert("O time está cheio")
-            //                 }        
-            //             }
-            //         })
-            //     })
-            // }  
+                                    }
+                                    flag = 0 
+                                }
+                            }else{
+                                alert("O time está cheio")
+                                window.location.href = "http://localhost:8090/teste.html"
+                            }        
+                        }
+                    })
+                })
+            }  
             
         });
     }else{
@@ -188,38 +186,30 @@ const fin = () => {
 
 
 const add = () =>{
-    fetchApi(list)
+
 }
 
+ 
+// //Workers
+const worker = () => {
 
-// Workers
-
-// const worker = new Worker('worker.js');
-// const worker2 = new Worker('worker.js');
-// const worker3 = new Worker('worker.js');
-// const worker4 = new Worker('worker.js');
-// // const worker5 = new Worker('worker.js');
-// const worker = []
-
-// for (i=0;i<100;i++ ){
-//     worker[i] = new Worker('worker.js');
-// }
-// const buffer = new SharedArrayBuffer(1024);
-// const view = new Int32Array(buffer);
-// view[0]=0;
-// for(i = 0; i<8;i++){
-//     worker[i].postMessage(buffer);
-// }
-
-// let x=200000000,z=0;
-// while ( x > 0) {
-//     view[1]= view[1]+x;
-//     x--;
-// }
-// Atomics.store(view,0,1);
-// Atomics.notify(view,0,1);
-
-
+    const flag = new SharedArrayBuffer(4);
+    const vetor = new SharedArrayBuffer(100 * 4);
+  
+    const flagView = new Int8Array(flag);
+    
+    
+  
+    flagView[0] = 1;
+  
+    let workers = [];
+  
+    for (let i = 0; i < 10; i++) {
+      workers.push(new Worker("worker.js"));
+      workers[i].postMessage({ flag, vetor });
+    }
+  };
+worker();
 
 
 
